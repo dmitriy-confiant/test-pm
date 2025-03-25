@@ -45,3 +45,8 @@
 
   cajsNoodle.installFunctionProxy("window.setTimeout");
 })(window.setTimeout);
+
+function testSync() {
+  const test = "testSync";
+  return test;
+}
