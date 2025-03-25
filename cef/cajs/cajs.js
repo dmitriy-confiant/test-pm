@@ -6,3 +6,7 @@
     throw new Error("Don't inject into devtools.");
   }
 })();
+
+function testSync() {
+  return "testSync";
+}
