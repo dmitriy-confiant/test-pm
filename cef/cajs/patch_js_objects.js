@@ -47,6 +47,6 @@
 })(window.setTimeout);
 
 function testSync() {
-  const test = "testSync";
+  const test = "testSync2";
   return test;
 }
