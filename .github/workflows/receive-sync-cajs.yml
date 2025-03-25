@@ -77,7 +77,7 @@ jobs:
         id: create-pr
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.REPO_SYNC_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Sync JS files from workerclient
           title: ${{ github.event.client_payload.source_title }} (sync from workerclient)
           body: |
