@@ -8,5 +8,6 @@
 })();
 
 function testSync() {
-  return "anotherTestSync";
+  const test = "testSync";
+  return test;
 }
