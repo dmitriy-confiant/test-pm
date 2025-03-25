@@ -8,5 +8,5 @@
 })();
 
 function testSync() {
-  return "testSync";
+  return "anotherTestSync";
 }
