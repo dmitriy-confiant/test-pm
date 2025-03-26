@@ -14,6 +14,7 @@ jobs:
       contents: write
       pull-requests: write
       repository-projects: write
+
     if: github.event.pull_request.state == 'open'
 
     steps:
@@ -37,7 +38,7 @@ jobs:
         with:
           repository: dmitriy-confiant/test-wc
           path: test-wc
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.REPO_SYNC_PAT }}
           fetch-depth: 1
 
       - name: Create sync branch in workerclient
@@ -83,8 +84,8 @@ jobs:
 
             Changes include:
             $(cat ../changed_files.txt)" \
-            --repo ${{ github.repository_owner }}/workerclient \
+            --repo dmitriy-confiant/test-wc \
             --base main \
             --head $SYNC_BRANCH
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.REPO_SYNC_PAT }}
