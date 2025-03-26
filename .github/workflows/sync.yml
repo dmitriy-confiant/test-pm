@@ -74,7 +74,7 @@ jobs:
             echo "PR already exists for this branch."
             echo "pr_exists=true" >> $GITHUB_OUTPUT
 
-            git fetch dmitriy-confiant/test-wc ${{ env.SYNC_BRANCH }}
+            git fetch origin ${{ env.SYNC_BRANCH }}
             git checkout ${{ env.SYNC_BRANCH }}
           else
             echo "No existing PR found. Creating a new branch."
