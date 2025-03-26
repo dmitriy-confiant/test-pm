@@ -5,7 +5,14 @@ on:
     types: [opened, synchronize, reopened]
     paths:
       - "cef/cajs/cajs.js"
+      - "cef/cajs/consentParsing.js"
+      - "cef/cajs/emulateDeviceMotion.js"
+      - "cef/cajs/emulateDeviceOrientation.js"
+      - "cef/cajs/emulateTouch.js"
       - "cef/cajs/patch_js_objects.js"
+      - "cef/cajs/polyfill-Intl.NumberFormat.js"
+      - "cef/cajs/polyfill-ResizeObserver.js"
+      - "cef/cajs/polyfill-lite.js"
 
 jobs:
   sync-files:
@@ -13,9 +20,8 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      repository-projects: write
 
-    if: github.event.pull_request.state == 'open'
+    if: github.event.pull_request.state == 'open' && !contains(github.event.pull_request.title, '[AUTO-SYNC]')
 
     steps:
       - name: Checkout puppet-master repo
@@ -30,7 +36,14 @@ jobs:
         with:
           files: |
             cef/cajs/cajs.js
+            cef/cajs/consentParsing.js
+            cef/cajs/emulateDeviceMotion.js
+            cef/cajs/emulateDeviceOrientation.js
+            cef/cajs/emulateTouch.js
             cef/cajs/patch_js_objects.js
+            cef/cajs/polyfill-Intl.NumberFormat.js
+            cef/cajs/polyfill-ResizeObserver.js
+            cef/cajs/polyfill-lite.js
 
       - name: Checkout workerclient repo
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -79,7 +92,7 @@ jobs:
           git push origin $SYNC_BRANCH
 
           gh pr create \
-            --title "Sync JS files from puppet-master PR #${{ github.event.pull_request.number }}" \
+            --title "[AUTO-SYNC] Sync JS files from puppet-master PR #${{ github.event.pull_request.number }}" \
             --body "This PR syncs JS files from puppet-master PR #${{ github.event.pull_request.number }} (${{ github.event.pull_request.html_url }})
 
             Changes include:
