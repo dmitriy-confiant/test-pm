@@ -65,7 +65,7 @@ jobs:
       - name: Create PR in workerclient
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
-          cd workerclient
+          cd test-wc
           git add cef_client/cajs/
 
           if git diff --staged --quiet; then
