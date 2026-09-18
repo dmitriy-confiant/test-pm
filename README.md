@@ -15,6 +15,10 @@ workflows, agents, CI experiments — has a realistic shape to act on.
 ## Layout
 
 ```
+app/
+  api/
+    ping/route.js         GET /api/ping
+    call-wc/route.js      GET /api/call-wc
 cef/
   cajs/
     cajs.js               canonical CEF-side script
@@ -23,8 +27,30 @@ cef/
   workflows/
     sync-cajs.yml         detects cajs changes and dispatches them downstream
     receive-sync-cajs.yml inbound sync receiver (not functional, see below)
+package.json
 README.md
 ```
+
+## Next.js app
+
+A minimal Next.js app lives in `app/`. It exposes two routes:
+
+- `GET /api/ping` — returns `{"service":"test-pm","status":"ok"}`.
+- `GET /api/call-wc` — fetches the ping endpoint of
+  [test-wc](https://github.com/dmitriy-confiant/test-wc) and returns its JSON.
+  The target URL comes from `WC_PING_URL` and defaults to
+  `http://localhost:3001/api/ping`. If test-wc is unreachable the route responds
+  with `502` and an error payload.
+
+Run it in development with:
+
+```
+npm install
+npm run dev
+```
+
+The dev server listens on **port 3000** (`http://localhost:3000`). test-wc is
+expected on port 3001, so the two can run side by side.
 
 ## Related repositories
 
@@ -60,5 +86,5 @@ hand, and edits in either repo need to be applied to the other manually.
 
 ## Working on this repo
 
-There is no build, no dependency manifest, and no test suite. Clone it, edit the
-files, open a pull request.
+There is no test suite. The only build is the Next.js app described above
+(`npm run build`). Clone the repo, edit the files, open a pull request.
