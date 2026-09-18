@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 const WC_BASE_URL = (process.env.WC_BASE_URL || 'http://localhost:8000').replace(/\/+$/, '');
 
 // Statuses the fetch spec forbids a body on; Response.json() throws for these.
-const NULL_BODY_STATUSES = new Set([101, 103, 204, 205, 304]);
+const NULL_BODY_STATUSES = new Set([204, 205, 304]);
 
 export async function GET() {
   const target = `${WC_BASE_URL}/ping`;
