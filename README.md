@@ -22,7 +22,7 @@ cef/
 .github/
   workflows/
     sync-cajs.yml         detects cajs changes and dispatches them downstream
-    receive-sync-cajs.yml handles inbound sync dispatches
+    receive-sync-cajs.yml inbound sync receiver (not functional, see below)
 README.md
 ```
 
@@ -35,22 +35,28 @@ README.md
 
 The worker client repository,
 [dmitriy-confiant/test-wc](https://github.com/dmitriy-confiant/test-wc),
-consumes the `cajs` scripts owned here. This repo's `cef/cajs/` directory is the
-source of truth; `test-wc` receives copies under `cef_client/cajs/`.
+holds copies of the `cajs` scripts under `cef_client/cajs/`. By convention this
+repo's `cef/cajs/` directory holds the canonical copies, but that convention is
+not enforced by any automation today — see below.
 
 ## Sync flow
 
-`.github/workflows/sync-cajs.yml` watches `cef/cajs/cajs.js` and
-`cef/cajs/patch_js_objects.js`. On a push to `main` — or on a pull request that
-touches those paths — it collects the changed files and dispatches them to
-[test-wc](https://github.com/dmitriy-confiant/test-wc), where they land as an
-automated pull request rather than a direct commit.
+There is currently **no working sync pipeline**. The intent is visible in the
+workflows, but neither half is wired up end to end:
 
-Because of that, the rule of thumb is:
+- `.github/workflows/sync-cajs.yml` watches `cef/cajs/cajs.js` and
+  `cef/cajs/patch_js_objects.js`. On a push to `main` — or on a pull request
+  that touches those paths — it collects the changed files and fires a
+  `sync-from-puppet-master` repository dispatch at
+  [test-wc](https://github.com/dmitriy-confiant/test-wc). No workflow in
+  `test-wc` listens for that event, so the dispatch is a no-op and nothing is
+  ever committed or proposed there.
+- `.github/workflows/receive-sync-cajs.yml` listens for the opposite direction
+  (`sync-from-workerclient`) and would write into *this* repo's `cef/cajs/`. It
+  is also non-functional: its "Check for changes" step has a bash syntax error.
 
-- Edit `cajs.js` / `patch_js_objects.js` **here**, in `cef/cajs/`.
-- Do not hand-edit the mirrored copies in `test-wc`; they will be overwritten by
-  the next sync.
+Until both halves are fixed, the mirrored copies in `test-wc` are maintained by
+hand, and edits in either repo need to be applied to the other manually.
 
 ## Working on this repo
 
