@@ -23,6 +23,7 @@ cef/
   workflows/
     sync-cajs.yml         detects cajs changes and dispatches them downstream
     receive-sync-cajs.yml inbound sync receiver (not functional, see below)
+CLAUDE.md
 README.md
 ```
 

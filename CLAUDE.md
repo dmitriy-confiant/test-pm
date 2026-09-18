@@ -15,20 +15,9 @@ under `cef_client/cajs/`.
 
 ## Structure
 
-```
-cef/
-  cajs/
-    cajs.js               canonical CEF-side script
-    patch_js_objects.js   canonical JS object patching helpers
-.github/
-  workflows/
-    sync-cajs.yml         dispatches cajs changes downstream to test-wc
-    receive-sync-cajs.yml inbound sync receiver
-README.md
-```
-
-There is no application code, dependency manifest, build, or test suite in this
-repo today.
+`README.md` carries the file tree under **Layout**, and describes what tooling
+the repo has under **Working on this repo**. Read them there — they are not
+duplicated here.
 
 ## Working conventions
 
@@ -52,7 +41,4 @@ repo today.
 
 ## Related repositories
 
-| Repo | Role | Link |
-| --- | --- | --- |
-| `test-pm` | puppet-master (this repo) | https://github.com/dmitriy-confiant/test-pm |
-| `test-wc` | workerclient | https://github.com/dmitriy-confiant/test-wc |
+See the **Related repositories** section of `README.md`.
