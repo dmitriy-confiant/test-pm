@@ -36,10 +36,11 @@ README.md
 A minimal Next.js app lives in `app/`. It exposes two routes:
 
 - `GET /api/ping` — returns `{"service":"test-pm","status":"ok"}`.
-- `GET /api/call-wc` — fetches the ping endpoint of
+- `GET /api/call-wc` — fetches `/ping` on
   [test-wc](https://github.com/dmitriy-confiant/test-wc) and returns its JSON.
-  The target URL comes from `WC_PING_URL` and defaults to
-  `http://localhost:3001/api/ping`. If test-wc is unreachable the route responds
+  The base URL comes from `WC_BASE_URL` and defaults to
+  `http://localhost:8000`, so the request goes to
+  `http://localhost:8000/ping`. If test-wc is unreachable the route responds
   with `502` and an error payload.
 
 Run it in development with:
@@ -49,8 +50,7 @@ npm install
 npm run dev
 ```
 
-The dev server listens on **port 3000** (`http://localhost:3000`). test-wc is
-expected on port 3001, so the two can run side by side.
+The dev server listens on **port 3000** (`http://localhost:3000`).
 
 ## Related repositories
 

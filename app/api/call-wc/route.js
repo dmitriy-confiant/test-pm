@@ -1,15 +1,19 @@
 export const dynamic = 'force-dynamic';
 
-const WC_PING_URL = process.env.WC_PING_URL || 'http://localhost:3001/api/ping';
+const WC_BASE_URL = process.env.WC_BASE_URL || 'http://localhost:8000';
 
 export async function GET() {
+  const target = `${WC_BASE_URL}/ping`;
   try {
-    const res = await fetch(WC_PING_URL, { cache: 'no-store' });
+    const res = await fetch(target, { cache: 'no-store' });
+    if (res.status === 204 || res.status === 304) {
+      return new Response(null, { status: res.status });
+    }
     const body = await res.json();
     return Response.json(body, { status: res.status });
-  } catch (err) {
+  } catch {
     return Response.json(
-      { service: 'test-pm', status: 'error', target: WC_PING_URL, error: String(err) },
+      { service: 'test-pm', status: 'error', target, error: 'test-wc is unreachable' },
       { status: 502 },
     );
   }
