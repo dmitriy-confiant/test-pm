@@ -40,8 +40,10 @@ A minimal Next.js app lives in `app/`. It exposes two routes:
   [test-wc](https://github.com/dmitriy-confiant/test-wc) and returns its JSON.
   The base URL comes from `WC_BASE_URL` and defaults to
   `http://localhost:8000`, so the request goes to
-  `http://localhost:8000/ping`. If test-wc is unreachable the route responds
-  with `502` and an error payload.
+  `http://localhost:8000/ping`. Any trailing slash on `WC_BASE_URL` is
+  stripped before `/ping` is appended. If test-wc is unreachable, or answers
+  with something that isn't JSON, the route responds with `502` and an error
+  payload.
 
 Run it in development with:
 
